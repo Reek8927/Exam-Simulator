@@ -1,8 +1,25 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api, buildUrl } from "@shared/routes";
-import type { InsertTestAttempt, InsertTestResponse, TestResponse } from "@shared/schema";
+import type { TestResponse } from "@shared/schema";
 
-// POST /api/attempts - Start a new test
+// Define InsertTestResponse here if not exported from @shared/schema
+export type InsertTestResponse = {
+  attemptId: number;
+  questionId: number;
+  // Add other fields as needed
+  // answer?: string;
+  timeSpent?: number;
+};
+
+// Define InsertTestAttempt here if not exported from @shared/schema
+export type InsertTestAttempt = {
+  // Replace with the actual fields required for creating a test attempt
+  // For example:
+  // userId: number;
+   examId: number;
+  // startedAt?: string;
+};
+
 export function useCreateAttempt() {
   return useMutation({
     mutationFn: async (data: InsertTestAttempt) => {
@@ -13,10 +30,11 @@ export function useCreateAttempt() {
         credentials: "include",
       });
       if (!res.ok) throw new Error("Failed to start attempt");
-      return api.attempts.create.responses[201].parse(await res.json());
+      return await res.json(); // ✅ FIX
     },
   });
 }
+
 
 // GET /api/attempts/:id - Get test state (resume or view result)
 export function useAttempt(id: number) {
@@ -41,6 +59,7 @@ export function useAttempt(id: number) {
 // POST /api/attempts/:id/submit - Finish test
 export function useSubmitAttempt() {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async (attemptId: number) => {
       const url = buildUrl(api.attempts.submit.path, { id: attemptId });
@@ -48,15 +67,20 @@ export function useSubmitAttempt() {
         method: api.attempts.submit.method,
         credentials: "include",
       });
+
       if (!res.ok) throw new Error("Failed to submit test");
       return api.attempts.submit.responses[200].parse(await res.json());
     },
+
     onSuccess: (data) => {
-      // Invalidate specific attempt query
-      queryClient.invalidateQueries({ queryKey: [api.attempts.get.path, data.id] });
+      // 🔥 FORCE fresh attempt fetch with updated endTime
+      queryClient.invalidateQueries({
+        queryKey: [api.attempts.get.path, data.id],
+      });
     },
   });
 }
+
 
 // POST /api/responses - Save answer
 export function useUpsertResponse() {

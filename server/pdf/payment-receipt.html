@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Receipt</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    h1 {
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    td, th {
+      border: 1px solid #000;
+      padding: 8px;
+    }
+    .center {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<h1>JEE (Main) – Payment Receipt</h1>
+
+<table>
+  <tr>
+    <td>Application Number</td>
+    <td>{{applicationNo}}</td>
+  </tr>
+  <tr>
+    <td>Candidate Name</td>
+    <td>{{name}}</td>
+  </tr>
+  <tr>
+    <td>Transaction ID</td>
+    <td>{{txnId}}</td>
+  </tr>
+  <tr>
+    <td>Amount Paid</td>
+    <td>₹ {{amount}}</td>
+  </tr>
+  <tr>
+    <td>Date</td>
+    <td>{{date}}</td>
+  </tr>
+  <tr>
+    <td>Status</td>
+    <td><b>SUCCESS</b></td>
+  </tr>
+</table>
+
+<p class="center" style="margin-top:40px;">
+  This is a system generated receipt. No signature required.
+</p>
+
+</body>
+</html>

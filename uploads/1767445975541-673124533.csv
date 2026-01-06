@@ -1,0 +1,47 @@
+﻿examId,subject,type,text,optionA,optionB,optionC,optionD,correctOption,correctNumericAnswer,marks,negativeMarks
+4,Physics,NUMERIC,Four forces are acting at a point P in equilibrium as shown in the figure. The ratio of force F1 to F2 is 1 : x. Find x.,,,,,,3,4,1
+4,Physics,MCQ,"For a free body diagram shown in the figure, the four forces are applied in the x and y directions. What additional force must be applied and at what angle with positive x-axis so that the net acceleration of body is zero?","√2 N, 45°","√2 N, 135°","2/√3 N, 30°","2 N, 45°",A,,4,1
+4,Physics,MCQ,A monkey of mass 50 kg climbs on a rope which can withstand tension of 350 N. It first climbs down with acceleration 4 m/s² and then climbs up with acceleration 5 m/s². Choose the correct option. (g = 10 m/s²),T = 700 N while climbing upward,T = 350 N while going downward,Rope will break while climbing upward,Rope will break while going downward,C,,4,1
+4,Physics,MCQ,A block of mass M slides down on a rough inclined plane with constant velocity. The angle of incline with horizontal is θ. The magnitude of the contact force will be:,Mg,Mg cosθ,√(Mg sinθ + Mg cosθ),Mg sinθ √(1 + μ),A,,4,1
+4,Physics,MCQ,"A block A takes 2 s to slide down a frictionless incline of 30° kept inside a lift going up with uniform velocity v. If the incline is changed to 45°, the time taken will be:",2.66 s,0.83 s,1.68 s,0.70 s,C,,4,1
+4,Physics,MCQ,Two bodies of masses m1 = 5 kg and m2 = 3 kg are connected by a light string over a smooth pulley on a smooth inclined plane. The system is at rest. The force exerted by the inclined plane on m1 is (g = 10 m/s²):,30 N,40N,50N,60N,B,,4,1
+4,Physics,NUMERIC,A uniform chain of 6 m length is placed on a table such that part of it is hanging over the edge. The coefficient of static friction is 0.5. Find the maximum length of chain hanging from the table (in m).,,,,,,2,4,1
+4,Physics,NUMERIC,A force (10i + 5j) N acts on an object of mass 100 g starting from rest. At t = 2 s its position is (ai + bj) m. Find a/b.,,,,,,2,4,1
+4,Physics,NUMERIC,,,,,,,12,4,1
+4,Physics,MCQ,,,,,,A,,4,1
+4,Physics,NUMERIC,,,,,,,36,4,1
+4,Physics,MCQ,,,,,,C,,4,1
+4,Physics,NUMERIC,,,,,,,6,4,1
+4,Physics,MCQ,,,,,,D,,4,1
+4,Physics,MCQ,,,,,,C,,4,1
+4,Physics,NUMERIC,,,,,,,25,4,1
+4,Physics,NUMERIC,,,,,,,25,4,1
+4,Physics,NUMERIC,,,,,,,492,4,1
+4,Physics,NUMERIC,,,,,,,500,4,1
+4,Physics,MCQ,,,,,,B,,4,1
+4,Physics,NUMERIC,,,,,,,12,4,1
+4,Physics,NUMERIC,,,,,,,21,4,1
+4,Physics,NUMERIC,,,,,,,5,4,1
+4,Physics,NUMERIC,,,,,,,3,4,1
+4,Physics,NUMERIC,,,,,,,15,4,1
+4,Physics,MCQ,,,,,,D,,4,1
+4,Physics,NUMERIC,,,,,,,30,4,1
+4,Physics,MCQ,,,,,,B,,4,1
+4,Physics,NUMERIC,,,,,,,3,4,1
+4,Physics,MCQ,,,,,,D,,4,1
+4,Physics,MCQ,,,,,,B,,4,1
+4,Physics,MCQ,,,,,,B,,4,1
+4,Physics,MCQ,,,,,,D,,4,1
+4,Physics,NUMERIC,,,,,,,0.005,4,1
+4,Physics,MCQ,,,,,,A,,4,1
+4,Physics,MCQ,,,,,,C,,4,1
+4,Physics,NUMERIC,,,,,,,0,4,1
+4,Physics,NUMERIC,,,,,,,346,4,1
+4,Physics,MCQ,,,,,,C,,4,1
+4,Physics,MCQ,,,,,,B,,4,1
+4,Physics,MCQ,,,,,,A,,4,1
+4,Physics,MCQ,,,,,,B,,4,1
+4,Physics,MCQ,,,,,,B,,4,1
+4,Physics,MCQ,,,,,,A,,4,1
+4,Physics,MCQ,,,,,,A,,4,1
+4,Physics,MCQ,,,,,,A,,4,1

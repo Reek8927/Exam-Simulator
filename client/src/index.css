@@ -4,47 +4,55 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =============================
+   ROOT THEME VARIABLES
+============================= */
 :root {
-  /* Professional Academic Palette - TCS iON Style but Modernized */
   --font-sans: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Base Colors */
   --background: 210 20% 98%;
   --foreground: 222 47% 11%;
 
-  /* Primary Brand (Academic Blue) */
   --primary: 217 91% 60%;
   --primary-foreground: 210 40% 98%;
 
-  /* Status Colors (Critical for CBT Interface) */
-  --status-not-visited: 220 13% 91%; /* Light Gray */
-  --status-not-answered: 0 84% 60%;  /* Red */
-  --status-answered: 142 71% 45%;    /* Green */
-  --status-review: 262 83% 58%;      /* Purple */
-  
   --muted: 210 40% 96%;
   --muted-foreground: 215 16% 47%;
-  
+
   --accent: 210 40% 96%;
   --accent-foreground: 222 47% 11%;
-  
+
   --destructive: 0 84% 60%;
   --destructive-foreground: 210 40% 98%;
-  
+
   --border: 214 32% 91%;
   --input: 214 32% 91%;
   --ring: 221 83% 53%;
-  
+
   --radius: 0.5rem;
 }
 
+/* =============================
+   BASE STYLES
+============================= */
 @layer base {
   body {
-    @apply bg-background text-foreground antialiased font-sans selection:bg-primary/20 selection:text-primary;
+    @apply bg-background text-foreground antialiased font-sans;
   }
 }
 
+/* =============================
+   FORM INPUT
+============================= */
+.input {
+  @apply w-full px-4 py-3 rounded-lg border border-slate-300
+  bg-white focus:ring-2 focus:ring-blue-500 outline-none transition;
+}
+
+/* =============================
+   SCROLLBAR
+============================= */
 @layer utilities {
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
@@ -55,32 +63,73 @@
   }
 }
 
-/* Custom Status Classes for Question Palette */
+/* =============================
+   QUESTION PALETTE STATUS
+============================= */
 .status-not-visited {
-  @apply bg-slate-200 text-slate-700 border-slate-300;
-}
-.status-not-answered {
-  @apply bg-red-500 text-white border-red-600 shadow-sm;
-}
-.status-answered {
-  @apply bg-green-500 text-white border-green-600 shadow-sm;
-}
-.status-review {
-  @apply bg-purple-500 text-white border-purple-600 shadow-sm;
-}
-.status-review-answered {
-  @apply bg-purple-600 text-white border-purple-700 shadow-sm relative;
-}
-.status-review-answered::after {
-  content: "✔";
-  @apply absolute -bottom-1 -right-1 bg-green-500 text-[8px] rounded-full w-3 h-3 flex items-center justify-center border border-white;
+  @apply bg-slate-200 text-slate-700 border border-slate-300;
 }
 
-/* Timer Animation */
-@keyframes pulse-red {
-  0%, 100% { opacity: 1; color: hsl(var(--destructive)); }
-  50% { opacity: 0.7; }
+.status-not-answered {
+  @apply bg-red-500 text-white border border-red-600 shadow-sm;
 }
+
+.status-answered {
+  @apply bg-green-500 text-white border border-green-600 shadow-sm;
+}
+
+.status-review {
+  @apply bg-purple-500 text-white border border-purple-600 shadow-sm;
+}
+
+.status-review-answered {
+  @apply bg-purple-600 text-white border border-purple-700 shadow-sm relative;
+}
+
+.status-review-answered::after {
+  content: "✔";
+  @apply absolute -bottom-1 -right-1 bg-green-500 text-[8px]
+  rounded-full w-3 h-3 flex items-center justify-center border border-white;
+}
+
+/* =============================
+   TIMER WARNING
+============================= */
+@keyframes pulse-red {
+  0%, 100% {
+    opacity: 1;
+    color: hsl(var(--destructive));
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
 .timer-warning {
   animation: pulse-red 1s infinite;
+}
+
+/* =============================
+   PAGE / DASHBOARD ANIMATIONS
+============================= */
+.page-enter {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.page-enter.active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.stagger {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.stagger.show {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.6s ease-out;
 }
