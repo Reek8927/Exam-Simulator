@@ -1,11 +1,16 @@
 import nodemailer from "nodemailer";
 
+console.log("BREVO KEY EXISTS:", !!process.env.BREVO_API_KEY);
+
+
 export async function sendRegistrationMail(
   toEmail: string,
   applicationNo: string,
   password: string
 ) {
-  const res = await fetch("https://api.brevo.com/v3/smtp/email", {
+  console.log("Sending email to:", toEmail);
+
+  const response = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -14,24 +19,24 @@ export async function sendRegistrationMail(
     body: JSON.stringify({
       sender: {
         name: "JEE CBT Simulator",
-        email: "noreply@jee-simulator.com", // can be anything verified
+        email: "reekbasu4529@gmail.com", // MUST match verified sender
       },
       to: [{ email: toEmail }],
       subject: "JEE Registration Successful",
       htmlContent: `
         <h2>Registration Successful</h2>
-        <p><b>Application Number:</b> ${applicationNo}</p>
-        <p><b>Password:</b> ${password}</p>
-        <p>Please keep these credentials safe.</p>
+        <p>Application No: ${applicationNo}</p>
+        <p>Password: ${password}</p>
       `,
     }),
   });
 
-  if (!res.ok) {
-    const error = await res.text();
-    console.error("Brevo email error:", error);
-    throw new Error("Email send failed");
+  const text = await response.text();
+  console.log("BREVO STATUS:", response.status);
+  console.log("BREVO RESPONSE:", text);
+
+  if (!response.ok) {
+    throw new Error("Brevo email failed");
   }
 }
-
 
