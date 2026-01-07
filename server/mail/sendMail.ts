@@ -1,42 +1,40 @@
-import nodemailer from "nodemailer";
-
-console.log("BREVO KEY EXISTS:", !!process.env.BREVO_API_KEY);
-
+import axios from "axios";
 
 export async function sendRegistrationMail(
   toEmail: string,
   applicationNo: string,
   password: string
 ) {
-  console.log("Sending email to:", toEmail);
-
-  const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "api-key": process.env.BREVO_API_KEY!,
-    },
-    body: JSON.stringify({
-      sender: {
-        name: "JEE CBT Simulator",
-        email: "reekbasu4529@gmail.com", // MUST match verified sender
+  try {
+    const res = await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          name: "JEE CBT Simulator",
+          email: "reekbasu4529@gmail.com", // VERIFIED sender only
+        },
+        to: [{ email: toEmail }],
+        subject: "JEE Registration Successful",
+        htmlContent: `
+          <h2>Registration Successful</h2>
+          <p><b>Application Number:</b> ${applicationNo}</p>
+          <p><b>Password:</b> ${password}</p>
+        `,
       },
-      to: [{ email: toEmail }],
-      subject: "JEE Registration Successful",
-      htmlContent: `
-        <h2>Registration Successful</h2>
-        <p>Application No: ${applicationNo}</p>
-        <p>Password: ${password}</p>
-      `,
-    }),
-  });
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY!,
+          "Content-Type": "application/json",
+        },
+        timeout: 5000, // 🔥 VERY IMPORTANT
+      }
+    );
 
-  const text = await response.text();
-  console.log("BREVO STATUS:", response.status);
-  console.log("BREVO RESPONSE:", text);
-
-  if (!response.ok) {
-    throw new Error("Brevo email failed");
+    console.log("Brevo mail sent:", res.status);
+  } catch (err: any) {
+    console.error("Brevo mail error:", err.message);
+    if (err.response) {
+      console.error("Brevo response:", err.response.data);
+    }
   }
 }
-
