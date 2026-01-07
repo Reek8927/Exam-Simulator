@@ -8,6 +8,13 @@
       "when": 1766729581092,
       "tag": "0000_blue_shockwave",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1767757798897,
+      "tag": "0001_volatile_molten_man",
+      "breakpoints": true
     }
   ]
 }
