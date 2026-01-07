@@ -96,44 +96,67 @@ app.get("/api/notices/public", async (_req, res) => {
 });
 
 app.post("/api/auth/register", async (req, res) => {
-  const { name, email, mobile, fatherName, motherName, dob, gender, category } =
-    req.body;
+  try {
+    const {
+      name,
+      email,
+      mobile,
+      fatherName,
+      motherName,
+      dob,
+      gender,
+      category,
+    } = req.body;
 
-  if (!name || !email || !mobile || !dob || !gender || !category) {
-    return res.status(400).json({ message: "Missing fields" });
+    if (!name || !email || !mobile || !dob || !gender || !category) {
+      return res.status(400).json({ message: "Missing fields" });
+    }
+
+    const applicationNo = `JEE${new Date().getFullYear()}${Math.floor(
+      100000 + Math.random() * 900000
+    )}`;
+
+    const password = crypto.randomBytes(4).toString("hex");
+
+    const student = await storage.createStudent(
+      name,
+      email,
+      mobile,
+      password,
+      applicationNo
+    );
+
+    // ✅ create blank application
+    await storage.createApplication(student.id);
+
+    await storage.updateApplication(student.id, {
+      fatherName,
+      motherName,
+      dob,
+      gender,
+      category,
+      currentStep: 1,
+    });
+
+    // ✅ SEND RESPONSE FIRST (IMPORTANT)
+    res.json({ success: true });
+
+    // ✅ SEND EMAIL IN BACKGROUND (NON-BLOCKING)
+    setImmediate(async () => {
+      try {
+        await sendRegistrationMail(email, applicationNo, password);
+        console.log("📧 Registration email sent");
+      } catch (err) {
+        console.error("❌ Email failed:", err);
+      }
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Registration failed" });
   }
-
-  const applicationNo = `JEE${new Date().getFullYear()}${Math.floor(
-    100000 + Math.random() * 900000
-  )}`;
-
-  const password = crypto.randomBytes(4).toString("hex");
-
-  const student = await storage.createStudent(
-    name,
-    email,
-    mobile,
-    password,
-    applicationNo
-  );
-
-  // ✅ CREATE BLANK APPLICATION (CRITICAL)
-  await storage.createApplication(student.id);
-
-  // Only save registration info
-  await storage.updateApplication(student.id, {
-    fatherName,
-    motherName,
-    dob,
-    gender,
-    category,
-    currentStep: 1,
-  });
-
-  await sendRegistrationMail(email, applicationNo, password);
-
-  res.json({ success: true });
 });
+
 
 
 
