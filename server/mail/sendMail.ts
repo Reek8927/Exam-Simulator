@@ -6,34 +6,29 @@ export async function sendRegistrationMail(
   password: string
 ) {
   const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,          // smtp-relay.brevo.com
-    port: Number(process.env.SMTP_PORT),  // 587
-    secure: false,                        // MUST be false
+    host: process.env.SMTP_HOST,
+    port: Number(process.env.SMTP_PORT),
+    secure: false, // MUST be false for port 587
     auth: {
-      user: process.env.SMTP_USER,        // 9f78a0001@smtp-brevo.com
-      pass: process.env.SMTP_PASS,        // Brevo SMTP password
-    },
-    tls: {
-      rejectUnauthorized: false,
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
     },
   });
 
+  await transporter.verify(); // 🔥 this catches config issues early
+
   await transporter.sendMail({
-    from: '"Exam Simulator" <reekbasu4529@gmail.com>', // VERIFIED sender
+    from: `"JEE CBT Simulator" <${process.env.SMTP_USER}>`,
     to: toEmail,
     subject: "JEE Registration Successful",
     html: `
       <h2>JEE (Main) Registration Successful</h2>
-      <p>Your registration has been completed successfully.</p>
-
-      <p><b>Application Number:</b> ${applicationNo}</p>
+      <p>Your registration is complete.</p>
+      <p><b>Application No:</b> ${applicationNo}</p>
       <p><b>Password:</b> ${password}</p>
-
-      <p>Please keep these details safe.</p>
       <br/>
-      <p>— Exam Simulator</p>
+      <p>— JEE CBT Simulator</p>
     `,
   });
-
-  console.log("✅ Registration email sent to:", toEmail);
 }
+
