@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
 
 type ReceiptData = {
   applicationNo: string;
@@ -25,11 +26,14 @@ export async function generatePaymentReceiptPdf(
   Object.entries(data).forEach(([key, value]) => {
     html = html.replaceAll(`{{${key}}}`, value);
   });
-
+  
   const browser = await puppeteer.launch({
-    headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  });
+  args: chromium.args,
+  executablePath: await chromium.executablePath(),
+  headless: true,
+});
+ 
+
 
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: "networkidle0" });

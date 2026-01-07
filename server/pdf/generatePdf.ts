@@ -1,6 +1,8 @@
 import fs from "fs";
 import path from "path";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
+
 import QRCode from "qrcode";
 
 type PdfData = {
@@ -81,9 +83,10 @@ export async function generateApplicationPdf(
   });
 
   const browser = await puppeteer.launch({
-    headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  });
+  args: chromium.args,
+  executablePath: await chromium.executablePath(),
+  headless: true,
+});
 
   const page = await browser.newPage();
 
