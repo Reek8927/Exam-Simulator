@@ -6,31 +6,25 @@ export async function sendRegistrationMail(
   password: string
 ) {
   const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT),
-  secure: false, // true only for port 465
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+    host: process.env.SMTP_HOST,   // smtp-relay.brevo.com
+    port: Number(process.env.SMTP_PORT), // 587
+    secure: false, // MUST be false for 587
+    auth: {
+      user: process.env.SMTP_USER, // 9f78a0001@smtp-brevo.com
+      pass: process.env.SMTP_PASS, // Brevo SMTP key
+    },
+  });
 
-  const mailOptions = {
-    from: `"JEE CBT Simulator" <${process.env.SMTP_USER}>`,
+  await transporter.verify(); // 🔥 ADD THIS (important)
+
+  await transporter.sendMail({
+    from: `"JEE CBT Simulator" <reekbasu4529@gmail.com>`,
     to: toEmail,
     subject: "JEE Registration Successful",
     html: `
-      <h2>JEE (Main) Registration Successful</h2>
-      <p>Your registration has been completed successfully.</p>
-
-      <p><b>Application Number:</b> ${applicationNo}</p>
+      <h2>Registration Successful</h2>
+      <p><b>Application No:</b> ${applicationNo}</p>
       <p><b>Password:</b> ${password}</p>
-
-      <p>Please keep these details safe.</p>
-      <br/>
-      <p>— JEE CBT Simulator</p>
     `,
-  };
-
-  await transporter.sendMail(mailOptions);
+  });
 }
